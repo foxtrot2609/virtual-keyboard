@@ -1,3 +1,10 @@
+.text-area {
+    padding: 5px;
+    /* border: 0; */
+    width: calc(100vw - 30px);
+    height: calc(100vh - 295px);
+}
+
 .keyboard {
     position: fixed;
     left: 0;
