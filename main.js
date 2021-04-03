@@ -2,23 +2,22 @@ const Keyboard = {
     elements: {
         main: null,
         keysContainer: null,
-        keys: []
+        keys: [],
+        capsKey: null
     },
 
     properties: {
         value: "",
-        capsLock: false
+        capsLock: false,
+        keyboardInputs: document.querySelectorAll(".use-keyboard-input"),
+        keyLayout: [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
+            "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+            "space"
+        ]
     },
-
-    keyLayout: [
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-        "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
-        "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-        "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-        "space"
-    ],
-
-    keyboardInputs: document.querySelectorAll(".use-keyboard-input"),
 
     init() {   
         // create and setup main element
@@ -36,7 +35,7 @@ const Keyboard = {
         this.elements.keys = this.elements.keysContainer.querySelectorAll(".keyboard__key")
 
         // open keyboard for elements with .use-keyboard-input
-        this.keyboardInputs.forEach((element) => {
+        this.properties.keyboardInputs.forEach((element) => {
             element.addEventListener("focus", () => {
                 this.open(element.value, currentValue => {
                     element.value = currentValue;
@@ -65,7 +64,7 @@ const Keyboard = {
     _createKeys() {
         const fragment = document.createDocumentFragment();
 
-        this.keyLayout.forEach((key) => {
+        this.properties.keyLayout.forEach((key) => {
 
             const insertLineBreak = ["backspace", "p", "enter", "?"].indexOf(key) !== -1;
 
@@ -77,12 +76,12 @@ const Keyboard = {
                     }); 
                 break;
 
-                case "caps":  
+                case "caps": 
                     this._createKeyBtn("keyboard_capslock", "keyboard__key--activatable", () => {
-                        caps.classList.toggle("keyboard__key--active");
+                        this.elements.capsKey.classList.toggle("keyboard__key--active");
                         this._toggleCapsLock();
                     }, "keyboard__key--wide");
-                    const caps = this.keyElement;
+                    this.elements.capsKey = this.keyElement;
                 break;
 
                 case "enter": 
@@ -127,9 +126,8 @@ const Keyboard = {
     },
 
     _updateValueInTarget() {
-        this.keyboardInputs.forEach((keyboard) => {
+        this.properties.keyboardInputs.forEach((keyboard) => {
             keyboard.value = this.properties.value;
-            console.log(this.properties.value)
         });
     },
 
