@@ -9,7 +9,7 @@ const Keyboard = {
     properties: {
         value: "",
         capsLock: false,
-        keyboardInputs: document.querySelectorAll(".use-keyboard-input"),
+        keyboardInputs: null,
         keyLayout: [
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
             "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
@@ -35,6 +35,7 @@ const Keyboard = {
         this.elements.keys = this.elements.keysContainer.querySelectorAll(".keyboard__key")
 
         // open keyboard for elements with .use-keyboard-input
+        this.properties.keyboardInputs = document.querySelectorAll(".use-keyboard-input");
         this.properties.keyboardInputs.forEach((element) => {
             element.addEventListener("focus", () => {
                 this.open(element.value, currentValue => {
